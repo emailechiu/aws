@@ -20,7 +20,6 @@ def time[A](f: => A) = {
 }
 val sanfile="s3n://echiutestss3/happyunhappy_atlarge.csv"
 val outputdir ="s3n://lmtd/http_result"
-val qrystr= "select * from terms join san using Device_ID"
 val san_pre=sqlContext.load("com.databricks.spark.csv",Map("path"->sanfile,"header"->"true"))
 val san = san_pre.selectExpr("Device_ID","Mood")
 san.registerTempTable("san")
