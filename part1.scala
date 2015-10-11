@@ -19,7 +19,7 @@ def time[A](f: => A) = {
   ret
 }
 val sanfile="s3n://echiutestss3/happyunhappy_atlarge.csv"
-val outputdir ="s3n://lmtd/http_result"
+val outputdir ="s3n://lmtd/http_result_8_1"
 val san_pre=sqlContext.load("com.databricks.spark.csv",Map("path"->sanfile,"header"->"true"))
 val san = san_pre.selectExpr("Device_ID","Mood")
 san.registerTempTable("san")

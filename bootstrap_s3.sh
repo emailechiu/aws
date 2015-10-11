@@ -4,9 +4,20 @@ yum install python-pip
 pip install --upgrade awscli
 aws configure
 cd aws
-aws s3 cp s3://echiutestss3/bootstrap.sh .
-aws s3 cp s3://echiutestss3/bootstrap_s3.sh .
 aws s3 cp s3://echiutestss3/core-site.xml /root/spark/conf/
+aws s3 cp s3://echiutestss3/spark-defaults.xml /root/spark/conf/
 /root/spark/sbin/stop-all.sh
 /root/spark/sbin/start-all.sh
 
+# processing
+./bulkcsv_s3.sh
+
+# wrapping up
+aws s3 cp /root/spark/conf/core-site.xml s3://echiutestss3
+aws s3 cp /root/spark/conf/spark-defaults.xml s3://echiutestss3 
+git add *.scala
+git add *.sh
+git commit -a -m "generic"
+git push origin master
+
+curl -s http://169.254.169.254/latest/meta-data/public-hostname

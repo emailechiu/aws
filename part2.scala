@@ -1,4 +1,4 @@
-val csvfile = "s3n://lmtd/2015/8/*/*.gz"
+val csvfile = "s3n://lmtd/2015/8/1/*.gz"
 val terms_pre=sqlContext.load("com.databricks.spark.csv",Map("path"->csvfile,"header"->"true"))
 val terms  = terms_pre.selectExpr("Device_ID","Collection_End_Time","Reboot_Count", "WAC_Crash_Count","HTTP_Response_Time_80_Percentile","HTTP_Response_Time_90_Percentile","HTTP_Response_Time_Mean","HTTP_Response_Time_Median","Last_Associated_IPGW_ID","cast(Beam_ID as int) as Beam_ID")
 terms.registerTempTable("terms")
