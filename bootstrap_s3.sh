@@ -14,7 +14,6 @@ curl -s http://169.254.169.254/latest/meta-data/public-hostname >> /root/spark/c
 
 # wrapping up
 aws s3 cp /root/spark/conf/core-site.xml s3://echiutestss3
-aws s3 cp /root/spark/conf/spark-defaults.xml s3://echiutestss3 
 git add *.scala
 git add *.sh
 git commit -a -m "generic"
