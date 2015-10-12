@@ -18,8 +18,8 @@ def time[A](f: => A) = {
   println("time: "+"%.1f".format((System.nanoTime-s)/1e9)+"s")
   ret
 }
-val csvfile = "s3n://lmtd/2015/8/*/*.gz"
-val outputdir ="s3n://lmtd/http_result_aug1"
+val csvfile = "s3n://lmtd.zip/*.gz"
+val outputdir ="s3n://lmtd/http_result_sep"
 val sanfile="s3n://echiutestss3/happyunhappy_atlarge.csv"
 val san_pre=sqlContext.load("com.databricks.spark.csv",Map("path"->sanfile,"header"->"true"))
 val san = san_pre.selectExpr("Device_ID","Mood")
