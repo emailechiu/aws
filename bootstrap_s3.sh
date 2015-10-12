@@ -10,7 +10,8 @@ aws s3 cp --recursive s3://echiutestss3/.aws /root/.aws # aws ec2 commands in li
 curl -s http://169.254.169.254/latest/meta-data/public-hostname >> /root/spark/conf/slaves
 
 # After stopping spark, it loses the IP and needs to be refreshed
-aws ec2 describe-instances --region us-east-1 --output text |grep INSTANCE|fgrep m3.xlarge| cut -f 14|grep amazonaws >/root/spark/conf/slaves
+# aws ec2 describe-instances --region us-east-1 --output text |grep INSTANCE|fgrep m3.xlarge| cut -f 14|grep amazonaws >/root/spark/conf/slaves
+aws ec2 describe-instances --region us-east-1 --output text |egrep INSTANCE.*m3.xlarge| grep -P -o ec2-.+com >/root/spark/conf/slaves
 /root/spark/sbin/stop-all.sh
 /root/spark/sbin/start-all.sh
 /root/spark/bin/spark-shell -i tests3.scala
