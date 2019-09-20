@@ -1,0 +1,93 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PowerUser",
+            "Effect": "Allow",
+            "NotAction": [
+                "iam:Create*",
+                "iam:Put*",
+                "iam:Set*",
+                "iam:Delete*",
+                "iam:Attach*",
+                "iam:Detach*",
+                "iam:Update*",
+                "sts:AssumeRole"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "AllowUserToManageOnlyTheirOnlyProfile",
+            "Effect": "Allow",
+            "Action": [
+                "iam:PutUserPolicy",
+                "iam:AttachUserPolicy",
+                "iam:DeleteUserPolicy",
+                "iam:DetachUserPolicy",
+                "iam:*AccessKey*",
+                "iam:*LoginProfile*"
+            ],
+            "Resource": "arn:aws:iam::*:user/${aws:username}"
+        },
+        {
+            "Sid": "AllowEC2ProfileManipulation",
+            "Effect": "Allow",
+            "Action": [
+                "iam:*InstanceProfile"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "AllowWithCondition",
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreateRole",
+                "iam:PutRolePolicy",
+                "iam:AttachRolePolicy",
+                "iam:DetachRolePolicy",
+                "iam:DeleteRolePolicy"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "StringLike": {
+                    "iam:PermissionsBoundary": "arn:aws:iam::*:policy/iam_boundary"
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreateRole",
+                "iam:CreatePolicy",
+                "iam:AttachRolePolicy",
+                "iam:*ServiceLinkedRole",
+                "iam:PassRole",
+                "iam:UpdateRole"
+            ],
+            "Resource": [
+                "arn:aws:iam::*:role/*service-role/*",
+                "arn:aws:iam::*:role/*DefaultRole",
+                "arn:aws:iam::*:policy/*service-role/*Amazon*"
+            ]
+        },
+        {
+            "Sid": "ExplicitDenyToBeSure",
+            "Effect": "Deny",
+            "Action": [
+                "iam:CreatePolicyVersion",
+                "iam:DeletePolicy",
+                "iam:DeletePolicyVersion",
+                "iam:SetDefaultPolicyVersion",
+                "iam:GetPolicyVersion"
+            ],
+            "Resource": "arn:aws:iam::*:policy/*boundary"
+        },
+        {
+            "Effect": "Deny",
+            "Action": [
+                "iam:*PermissionsBoundary"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
